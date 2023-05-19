@@ -2,7 +2,8 @@
   "ExpandedNodes": [
     "",
     "\\config",
-    "\\src"
+    "\\src",
+    "\\voices"
   ],
   "PreviewInSolutionExplorer": false
 }
