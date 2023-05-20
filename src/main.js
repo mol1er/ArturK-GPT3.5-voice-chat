@@ -41,9 +41,11 @@ bot.command('start', async (ctx) => {
 });
 
 bot.on(message('voice'), async (ctx) => {
-    const { session, context } = createUserSession();
-    ctx.session = session;
-    ctx.context = context;
+    if (!ctx.session) {
+        const { session, context } = createUserSession();
+        ctx.session = session;
+        ctx.context = context;
+    }
 
     try {
         const link = await ctx.telegram.getFileLink(ctx.message.voice.file_id);
@@ -77,9 +79,11 @@ bot.on(message('voice'), async (ctx) => {
 });
 
 bot.on(message('text'), async (ctx) => {
-    const { session, context } = createUserSession();
-    ctx.session = session;
-    ctx.context = context;
+    if (!ctx.session) {
+        const { session, context } = createUserSession();
+        ctx.session = session;
+        ctx.context = context;
+    }
 
     try {
         ctx.session.messages.push({
