@@ -74,7 +74,7 @@ bot.on(message('voice'), async (ctx) => {
         await ctx.reply(response.content);
     } catch (e) {
         console.log('ERROR while voice message', e.message);
-        await ctx.reply('BOT SLOMALSYA...');
+        await ctx.reply('BOT SLOMALSYA... Najmi /new');
     }
 });
 
@@ -105,7 +105,7 @@ bot.on(message('text'), async (ctx) => {
         await ctx.reply(response.content);
     } catch (e) {
         console.log('ERROR while text message', e.message);
-        await ctx.reply('BOT SLOMALSYA...');
+        await ctx.reply('BOT SLOMALSYA... Najmi /new');
     }
 });
 
