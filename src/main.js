@@ -24,9 +24,14 @@ bot.command('new', async (ctx) => {
     ctx.session = session;
     ctx.context = context;
 
-    // ��������� � ����������� ����
-    const restartMessage = 'The bot has been restarted.';
+    // Сообщение о перезапуске бота
+    const restartMessage = 'Бот перезапущен.';
+    const donationText = 'Это не обязательно, но если вы хотите, можете поддержать развитие бота, а именно, помочь с арендой сервера и оплатой API GPT 3.5.\nTinkoff Bank: 2200 7007 2880 3668\nQiwi: +79624236480\n\nЖду ваше сообщение..'
     await ctx.reply(restartMessage);
+
+    setTimeout(async () => {
+        await ctx.reply(donationText);
+    }, 4000)
 });
 
 bot.command('start', async (ctx) => {
@@ -34,10 +39,14 @@ bot.command('start', async (ctx) => {
     ctx.session = session;
     ctx.context = context;
 
-    // �������������� ���������
-    const welcomeMessage = `Hello! I'm the first voice GPT chat by @mol1er. Write me your question using a voice message or text.`;
-
+    // Приветственное сообщение
+    const welcomeMessage = `Привет! Я первый голосовой чат GPT с искуственным интеллектом. Напиши свой вопрос или задание для меня в виде голосового сообщения или текстом!`;
+    const donationText = 'Это не обязательно, но если вы хотите, можете поддержать развитие бота, а именно, помочь с арендой сервера и оплатой API GPT 3.5.\nTinkoff Bank: 2200 7007 2880 3668\nQiwi: +79624236480\n\nЖду ваше сообщение..'
     await ctx.reply(welcomeMessage);
+
+    setTimeout(async () => {
+        await ctx.reply(donationText);
+    }, 4000)
 });
 
 bot.on(message('voice'), async (ctx) => {
@@ -54,13 +63,14 @@ bot.on(message('voice'), async (ctx) => {
         const mp3Path = await ogg.toMp3(oggPath, userId);
 
         const text = await openai.transcription(mp3Path);
+        await ctx.reply(`Ваш запрос: ${text}.`);
 
         ctx.session.messages.push({
             role: openai.roles.USER,
             content: text,
         });
 
-        await ctx.reply('Working on your question...'); // ��������� "������� ��� ����� ��������"
+       // await ctx.reply('Работаю над вашим вопросом...');
 
         const response = await openai.chat(ctx.session.messages, ctx.context);
 
@@ -74,7 +84,7 @@ bot.on(message('voice'), async (ctx) => {
         await ctx.reply(response.content);
     } catch (e) {
         console.log('ERROR while voice message', e.message);
-        await ctx.reply('BOT SLOMALSYA... Najmi /new');
+        await ctx.reply('Бот приуныл, нажмите /new чтобы он вернулся к вам с новыми силами!');
     }
 });
 
@@ -91,7 +101,7 @@ bot.on(message('text'), async (ctx) => {
             content: ctx.message.text,
         });
 
-        await ctx.reply('Working on your question...'); // ��������� "������� ��� ����� ��������"
+        await ctx.reply('Работаю над вашим вопросом...');
 
         const response = await openai.chat(ctx.session.messages, ctx.context);
 
@@ -105,7 +115,7 @@ bot.on(message('text'), async (ctx) => {
         await ctx.reply(response.content);
     } catch (e) {
         console.log('ERROR while text message', e.message);
-        await ctx.reply('BOT SLOMALSYA... Najmi /new');
+        await ctx.reply('Бот приуныл, нажмите /new чтобы он вернулся к вам с новыми силами!');
     }
 });
 
