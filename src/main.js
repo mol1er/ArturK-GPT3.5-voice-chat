@@ -40,7 +40,7 @@ bot.command('start', async (ctx) => {
     ctx.context = context;
 
     // Приветственное сообщение
-    const welcomeMessage = `Привет! Я первый голосовой чат GPT с искуственным интеллектом. Напиши свой вопрос или задание для меня в виде голосового сообщения или текстом!`;
+    const welcomeMessage = `Привет! Я первый голосовой чат GPT с искуственным интеллектом от @mol1er. Напиши мне свой вопрос или задание в виде голосового или текстового сообщения!`;
     const donationText = 'Это не обязательно, но если вы хотите, можете поддержать развитие бота, а именно, помочь с арендой сервера и оплатой API GPT 3.5.\nTinkoff Bank: 2200 7007 2880 3668\nQiwi: +79624236480\n\nЖду ваше сообщение..'
     await ctx.reply(welcomeMessage);
 
@@ -63,7 +63,7 @@ bot.on(message('voice'), async (ctx) => {
         const mp3Path = await ogg.toMp3(oggPath, userId);
 
         const text = await openai.transcription(mp3Path);
-        await ctx.reply(`Ваш запрос: ${text}.`);
+        await ctx.reply(`Ваш запрос: ${text}`);
 
         ctx.session.messages.push({
             role: openai.roles.USER,
